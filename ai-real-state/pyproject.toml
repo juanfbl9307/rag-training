@@ -10,7 +10,10 @@ requires-python = ">=3.9,<4.0"
 dependencies = [
     "langchain-openai",
     "langchain_chroma",
-    "langchain_community"
+    "langchain_community",
+    "langgraph",
+    "unstructured",
+    "markdown"
 ]
 
 [build-system]
