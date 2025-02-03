@@ -5,7 +5,7 @@
 - **Tipo de proyecto**: Residencial.
 - **Descripción**: Conjunto habitacional con 120 departamentos de 1, 2 y 3 habitaciones. Áreas verdes, gimnasio, piscina y estacionamiento privado.
 - **Precios**:
-  - Departamento de 1 habitación: $150,000 USD.
+  - Departamento de 1 habitación: $200,000 USD.
   - Departamento de 2 habitaciones: $220,000 USD.
   - Departamento de 3 habitaciones: $300,000 USD.
 - **Disponibilidad**: 80% vendido. Últimas unidades disponibles en departamentos de 1 y 2 habitaciones.
