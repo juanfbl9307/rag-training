@@ -13,7 +13,8 @@ dependencies = [
     "langchain_community",
     "langgraph",
     "unstructured",
-    "markdown"
+    "markdown",
+    "pypdf"
 ]
 
 [build-system]

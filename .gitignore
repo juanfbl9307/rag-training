@@ -1,2 +1,4 @@
 .idea
 ai-real-state/notebooks/chroma_langchain_db
+/ai-real-state/data/
+.DS_Store
