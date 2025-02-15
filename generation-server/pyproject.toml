@@ -1,0 +1,23 @@
+[project]
+name = "generation-server"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Juan Felipe",email = "juanfbl9307@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.9,<4.0"
+dependencies = [
+    "flask",
+    "langchain_openai",
+    "langchain_chroma",
+    "langgraph",
+]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[virtualenvs]
+create = false
+in-project = true
