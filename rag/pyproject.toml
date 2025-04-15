@@ -6,7 +6,7 @@ authors = [
     {name = "Juan Felipe",email = "juanfbl9307@gmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.9,<4.0"
+requires-python = ">=3.9,<3.13"
 dependencies = [
     "langchain-openai",
     "langchain_chroma",
@@ -14,7 +14,11 @@ dependencies = [
     "langgraph",
     "unstructured",
     "markdown",
-    "pypdf"
+    "pypdf",
+    "docling",
+    "langchain_experimental",
+    "langchain-docling",
+    "beautifulsoup4"
 ]
 
 [build-system]

@@ -2,3 +2,4 @@
 rag/notebooks/chroma_langchain_db
 /rag/data/
 .DS_Store
+.env

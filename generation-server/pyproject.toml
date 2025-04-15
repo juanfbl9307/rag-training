@@ -11,7 +11,7 @@ dependencies = [
     "flask",
     "langchain_openai",
     "langchain_chroma",
-    "langgraph",
+    "langgraph"
 ]
 
 [build-system]

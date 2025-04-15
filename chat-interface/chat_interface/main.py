@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 import os
-st.title("Chatbot with External API")
+st.title("Chatbot for User Manuals")
 GENERATION_SERVER_URL = os.environ.get("GENERATION_SERVER_URL")
 GENERATION_SERVER_PORT = os.environ.get("GENERATION_SERVER_PORT")
 if not GENERATION_SERVER_URL:
@@ -9,7 +9,8 @@ if not GENERATION_SERVER_URL:
 if not GENERATION_SERVER_PORT:
     exit("Please set GENERATION_SERVER_PORT environment variable")
 
-API_URL = f'{GENERATION_SERVER_URL}:{GENERATION_SERVER_PORT}/chat'  # Replace with your actual API URL
+# Replace with your actual API URL
+API_URL = f'{GENERATION_SERVER_URL}:{GENERATION_SERVER_PORT}/chat'
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -29,13 +30,15 @@ if user_input:
 
     # Make request to external HTTP server
     try:
-        response = requests.post(API_URL, json={"message": user_input}, timeout=5)
+        response = requests.post(
+            API_URL, json={"message": user_input}, timeout=50)
         response.raise_for_status()
         bot_reply = response.json().get("reply", "No response from server")
     except requests.exceptions.RequestException as e:
         bot_reply = f"Error: {str(e)}"
 
     # Append bot response to chat history
-    st.session_state.messages.append({"role": "assistant", "content": bot_reply})
+    st.session_state.messages.append(
+        {"role": "assistant", "content": bot_reply})
     with st.chat_message("assistant"):
         st.markdown(bot_reply)
