@@ -1,21 +1,4 @@
 services:
-  zipkin:
-    image: openzipkin/zipkin
-    ports:
-      - "9411:9411"
-    depends_on: [otel-collector]
-    networks:
-      - internal
-  otel-collector:
-    image: otel/opentelemetry-collector-contrib:0.111.0
-    command: ["--config=/etc/otel-collector-config.yaml"]
-    ports:
-      - "4318:4318"
-      - "4317:4317"
-    volumes:
-      - ${PWD}/otel-collector-config.yaml:/etc/otel-collector-config.yaml
-    networks:
-      - internal
   chromadb:
     image: ghcr.io/chroma-core/chroma:latest
     volumes:
@@ -25,20 +8,16 @@ services:
     networks:
       - internal
     environment:
-      - CHROMA_OPEN_TELEMETRY__ENDPOINT=http://otel-collector:4318/
-      - CHROMA_OPEN_TELEMETRY__SERVICE_NAME=chroma
       - IS_PERSISTENT=TRUE
-    depends_on:
-      - otel-collector
-      - zipkin
 
   generation-server:
-    image: generation-server-user-manual:v1.3
+    image: generation-server:v1
     container_name: generation-server
     hostname: generation-server
     restart: always
     environment:
       - COLLECTION_NAME=user-manual
+      - TEMPLATE_FILE_PATH=/app/templates/system-hr.txt
       - MODEL=gpt-4o-mini
       - LANGCHAIN_API_KEY=${LANGCHAIN_API_KEY}
       - LANGCHAIN_TRACING_INTEGRATION=langchain
@@ -58,7 +37,7 @@ services:
       - internal
 
   chat:
-    image: chat-interface:v1.1
+    image: chat-interface:latest
     container_name: chat-interface
     restart: always
     environment:

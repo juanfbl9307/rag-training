@@ -1,5 +1,5 @@
 [project]
-name = "ai-real-state"
+name = "rag"
 version = "0.1.0"
 description = ""
 authors = [
@@ -18,7 +18,8 @@ dependencies = [
     "docling",
     "langchain_experimental",
     "langchain-docling",
-    "beautifulsoup4"
+    "beautifulsoup4",
+    "chromadb",
 ]
 
 [build-system]

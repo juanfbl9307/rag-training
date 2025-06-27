@@ -17,6 +17,7 @@ CHROMA_HOST = os.environ.get("CHROMA_HOST")
 CHROMA_PORT = os.environ.get("CHROMA_PORT", "8000")
 MODEL = os.environ.get("MODEL", "gpt-3o-mini")
 COLLECTION_NAME = os.environ.get("COLLECTION_NAME")
+TEMPLATE_FILE_PATH = os.environ.get("TEMPLATE_FILE_PATH")
 
 
 load_dotenv()
@@ -25,6 +26,29 @@ model = MODEL
 
 llm = ChatOpenAI(temperature=0.5, model=model, max_tokens=4096)
 embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
+
+def load_template_from_file(file_path):
+    """
+    Load a template from a file.
+
+    Args:
+        file_path (str): Path to the template file
+
+    Returns:
+        str: The template content
+
+    Raises:
+        FileNotFoundError: If the template file is not found
+    """
+    try:
+        with open(file_path, 'r') as file:
+            return file.read()
+    except FileNotFoundError:
+        print(f"Template file not found at {file_path}")
+        raise
+    except Exception as e:
+        print(f"Error reading template file: {e}")
+        raise
 
 print(f'connecting to vector DB {CHROMA_HOST}:{CHROMA_PORT}, in collection {COLLECTION_NAME}')
 chroma_client = chromadb.HttpClient(host=CHROMA_HOST, port=CHROMA_PORT)
@@ -37,7 +61,8 @@ vector_store = Chroma(
 )
 retriever = vector_store.as_retriever()
 
-template = """
+# Default template in case the file is not available
+default_template = """
 **Context**: {context}
 You are an expert in user manuals, your task is to provide accurate and useful information about the user manual. Use only the information provided in the documents to answer.
 **User Question**: {question}
@@ -50,6 +75,16 @@ You are an expert in user manuals, your task is to provide accurate and useful i
 5. Provide the page number for reference.
 7. Answer the question in the language of the same question.
 """
+
+# Load template from file if available, otherwise use default
+template = default_template
+if TEMPLATE_FILE_PATH:
+    try:
+        template = load_template_from_file(TEMPLATE_FILE_PATH)
+        print(f"Template loaded from {TEMPLATE_FILE_PATH}")
+    except Exception as e:
+        print(f"Failed to load template from file, using default template. Error: {e}")
+
 prompt_template = ChatPromptTemplate([
     ("system", template),
     ("user", "{question}")
